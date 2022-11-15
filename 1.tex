@@ -196,9 +196,9 @@ minimum height =30pt ,draw=orange] (9) at(9,1.732){3};
 \left|
 \begin{array}{c:ccc}
  \lambda & -1 & 0 & 0\\
- -1 & \lambda & & \vdots\\
- 0 & & \ddots & \vdots\\
- 0 & \cdots & \cdots & \lambda
+ -1 & \lambda & \cdots & a_{2n}\\
+ 0 & \vdots & \ddots & \vdots\\
+ 0 & a_{n2} & \cdots & \lambda
 \end{array}
 \right|
 =
@@ -816,22 +816,70 @@ $\textbf D$ 在对 $\Gamma$ 适当重标号后可以被表示为：
 \]
 
 \begin{definition}[cycle-subspace 与 cut-subspace]
-$\Gamma$ 的 cycle-subspace 
+$\Gamma$ 的 cycle-subspace 是 $\Gamma$ 关联映射的核。
+$\Gamma$ 的 cut-subspace 是 $C_1(\Gamma)$ 的正交补。
 \end{definition}
 
+第一条是由上面的定理引申出的，也就是所有代表 $\Gamma$ 中环的向量都属于 cycle-subspace。存在两个集合 $V_1, V_2 \subsetneq V\Gamma$，且 $V_1 \cap V_2 = \emptyset$、$V_1 \cup V_2 = V\Gamma$，令 $H \subseteq E\Gamma$，包含 $E\Gamma$ 中所有一端在 $V_1$ 中而另一端在 $V_2$ 中的边，则称 $H$ 是一个割(cut)。类似于环定向，我们定义 $H$ 的割定向(cut-orientations)，标定 $V_1$ 与 $V_2$ 作为 $H$ 中边的出边与入边，然后定义 $H$ 上的函数 $\xi_{H} \in C_1(\Gamma)$：
+\begin{enumerate}
+\item 若 $e\in H$，且在图中的定向与割定向相同，则 $\xi_H(e) = +1$；
+\item 若 $e\in H$，且在图中的定向与割定向不同，则 $\xi_H(e) = -1$；
+\item 若 $e\notin H$，则 $\xi_H(e) = 0$。
+\end{enumerate}
+
+\begin{definition}[等周数]
+对于任意的非空点集 $X \subseteq V\Gamma$，存在一个割将 $V\Gamma$ 划分为 $X$ 与 $\Gamma \backslash X$，记为 $\delta X$，则其等周数(isoperimetric number, 或称 Cheeger constant) 定义为：
+\[
+i(\Gamma)=\min _{|X| \leq|V \Gamma| / 2} \frac{|\delta X|}{|X|}
+\]
+例如 $i(K_n) = \lceil n / 2\rceil$。
+\end{definition}
+
+\begin{proposition}
+\begin{enumerate}
+    \item $\Gamma$ 的 cut-subspace 是一个维度为 $\Gamma$ 的秩的线性空间。
+    \item 对于 $\Gamma$ 中的割 $H$，则 $\xi_H$ 属于 $\Gamma$ 的 cut-subspace。
+\end{enumerate}
+\end{proposition}
+\begin{proof}
+\begin{enumerate}
+    \item cycle-subspace 的维数是 $m - n + c$，cut-subspace 作为它的正交补，维度是 $n - c = r(\Gamma)$；
+    \item 若 $H$ 是 $\Gamma$ 中的割，则存在 $V_1, V_2$ 定义如上，类似地，再令 $\textbf x_H$ 为代表 $\xi_H$ 的列向量，有
+    \[
+        \mathbf{x}_{H}^{t} = \pm \frac{1}{2}\left[\sum_{v_{i} \in V_{1}} \mathbf{d}_{i}-\sum_{v_{i} \in V_{2}} \mathbf{d}_{i}\right]
+    \]
+    其中 $\textbf{d}_i$ 是关联矩阵中于 $v_i$ 相关的行向量，等式右边的符号取决于取决于两种割定向的选取。注意到若 $\textbf{Dz} = \textbf{0}$，则 $\textbf{d}_i \textbf{z} = 0, \forall v_i\in V$，还可以得到 $\mathbf{x}_{H}^{T} \textbf{z} = 0$，所以 $\xi_H$ 是 cycle-subspace 的正交补，由定义得，这是 cut-subspace。
+\end{enumerate}
+\end{proof}
+
+\begin{definition}
+令 $\textbf{D}$ 为 $\Gamma$ 定向后的关联矩阵，$\textbf{A}$ 是 $\Gamma$ 的邻接矩阵，拉普拉斯矩阵(Laplacian matrix) $\textbf{Q}$定义为：
+\[
+\textbf{Q} = \textbf{DD}^T = \Delta - \textbf{A}
+\]
+其中 $\Delta$ 是一个对角矩阵，${(\Delta)}_{ii}$ 的值为 $v_i$ 的度数，可以看出 $\textbf{Q}$ 与 $\Gamma$ 的定向无关。
+\end{definition}
+\begin{proof}
+$(\textbf{DD}^T)_{i j}$ 是 $\textbf{D}$ 中行 $\textbf{d}_i$ 与 $\textbf{d}_j$ 的内积，下面讨论两边 $(i,j)$ 位置的元素：
+\begin{enumerate}
+    \item 若 $i \neq j$，这两行在同一个位置同时非零，当且仅当存在一条边连接 $v_i$ 与 $v_j$。这两个非零元素分别为 $+1$ 与 $-1$，故此时 $(\textbf{DD}^T)_{i j} = -1 = -(\textbf{A})_{i j}$；
+    \item 若 $i = j$，$(\textbf{DD}^T)_{i i}$ 是 $\textbf{d}_i$ 与自己的内积，又其中非零元素个数为 $v_i$ 的度数，故 $(\textbf{DD}^T)_{i i} = \Delta_{i i}$。
+\end{enumerate}
+\end{proof}
+
+\begin{proposition}[Laplacian谱]
+令 $\textbf{Q}$ 的特征值为 $\mu_0 \le \mu_1 \le \dots \le \mu_{n - 1}$，我们有：
+\begin{enumerate}
+    \item $\mu_0 = 0$，对应的特征向量为 $[1, 1, \dots, 1]$；
+    \item 若 $\Gamma$ 连通，则 $\mu_1 > 0$；
+    \item 若 $\Gamma$ 是$k$-正则的，则 $\mu_i = k - \lambda_i$，其中 $\lambda_i$ 是 $\Gamma$ 降序排序后第 $i$ 个特征值。
+\end{enumerate}
+\end{proposition}
 
 
+%——————————————————————————————————%
 
-
-
-
-
-
-
-
-
-
-
+\section{生成树}
 
 
 
