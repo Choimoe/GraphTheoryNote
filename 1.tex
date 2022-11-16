@@ -881,7 +881,31 @@ $(\textbf{DD}^T)_{i j}$ 是 $\textbf{D}$ 中行 $\textbf{d}_i$ 与 $\textbf{d}_j
 
 \section{生成树}
 
+关注 cycle-subspace 与 cut-subspace 的基是一个很好的锻炼机会，这个问题被 Kirchhoff(1847) 在对电路网络的研究中解决了。现在把注意力放在连通图上，因为非连通图的 cycle-subspace 与 cut-subspace 是分量对应空间的直和，故在本章中仍有 $\Gamma$ 表示 $n$ 个点与 $m$ 条边的连通图，故 $r(\Gamma) = n - 1$，$s(\Gamma) = m - n + 1$，我们假定 $\Gamma$ 已经被定向了。
 
+\begin{definition}[生成树]
+$\Gamma$ 的生成树(spanning tree)是 $\Gamma$ 的一个子图，有 $n$ 个点与 $n - 1$ 条边，且该子图连通。
+\end{definition}
+
+在此处用 $T$ 表示生成树，方便起见，有时也用 $T$ 也表示它的边集，由这个定义可以直接得到：
+
+\begin{lemma}
+$T$ 是连通图 $\Gamma$ 的生成树，则：
+\begin{enumerate}
+    \item $\forall g\in E\Gamma, g \notin T$，仅存在一个环包含 $g$ 与 $T$ 中的边；
+    \item $\forall h\in E\Gamma, g \in T$，仅存在一个割包含 $h$ 与 $T$ 外的边。
+\end{enumerate}
+\end{lemma}
+
+我们用 $\text{cyc}(T,g)$ 与 $\text{cut}(T,h)$ 来表示这个唯一的环与割。我们用 $\Gamma$ 中的定向来分别给 $\text{cyc}(T,g)$ 与 $\text{cut}(T,h)$ 进行环定向与割定向。于是可以在 $C_1(\Gamma)$ 中按照上一节的定义来定义两个元素 $\xi_{(T,g)}$ 与 $\xi_{(T,h)}$。
+
+\begin{theorem}
+与上一个引理中的定义相同，我们有：
+\begin{enumerate}
+    \item $g$ 跑遍 $E\Gamma - T$ 时，$m - n + 1$ 个 $\xi_{(T,g)}$ 构成 $\Gamma$ 的 cycle-subspace 的一组基；
+    \item $h$ 跑遍 $T$ 时，$n - 1$ 个 $\xi_{(T,h)}$ 构成 $\Gamma$ 的 cut-subspace 的一组基。
+\end{enumerate}
+\end{theorem}
 
 
 
