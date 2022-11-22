@@ -897,7 +897,7 @@ $T$ 是连通图 $\Gamma$ 的生成树，则：
 \end{enumerate}
 \end{lemma}
 
-我们用 $\text{cyc}(T,g)$ 与 $\text{cut}(T,h)$ 来表示这个唯一的环与割。我们用 $\Gamma$ 中的定向来分别给 $\text{cyc}(T,g)$ 与 $\text{cut}(T,h)$ 进行环定向与割定向。于是可以在 $C_1(\Gamma)$ 中按照上一节的定义来定义两个元素 $\xi_{(T,g)}$ 与 $\xi_{(T,h)}$。
+我们用 $\text{cyc}(T,g)$ 与 $\text{cut}(T,h)$ 来表示这个唯一的环与割。我们用 $\Gamma$ 中的定向来分别给 $\text{cyc}(T,g)$ 与 $\text{cut}(T,h)$ 进行环定向与割定向。于是可以在 $C_1(\Gamma)$ 中，按照上一节的定义来定义两个元素： $\xi_{(T,g)}$ 与 $\xi_{(T,h)}$。
 
 \begin{theorem}
 与上一个引理中的定义相同，我们有：
@@ -906,6 +906,120 @@ $T$ 是连通图 $\Gamma$ 的生成树，则：
     \item $h$ 跑遍 $T$ 时，$n - 1$ 个 $\xi_{(T,h)}$ 构成 $\Gamma$ 的 cut-subspace 的一组基。
 \end{enumerate}
 \end{theorem}
+\begin{proof}
+\begin{enumerate}
+    \item 上一中我们证明了 $\xi_{(T,g)}$ 在 cycle-subspace 中，注意到不存在两个 $g\neq g'$，有 $\text{cyc}(T,g) = \text{cyc}(T,g')$，共有 $m - n + 1$ 个向量，而 cycle-subspace 正有 $m - n + 1$ 维，所以可以得到其构成 cycle-subspace 的一组基；
+    \item 类似上一条证明，自证不难。
+\end{enumerate}
+\end{proof}
+
+环与割只是图的一部分，直接用关联矩阵来描述较为麻烦，我们来考虑关联矩阵的子矩阵的性质，便于导出环与割。
+
+\begin{proposition}[Poincare 1901]
+对于图 $Gamma$ 的关联矩阵 $D$ 的任意子矩阵，其行列式只有三种取值：$0$、$+1$ 与 $-1$。
+\end{proposition}
+\begin{proof}
+令这个子矩阵为 $\textbf{S}$。
+\begin{enumerate}
+    \item 若 $\textbf{S}$ 的每一列都有两个非零元素，则可以得到列的和为 $0$，此时 $\det \textbf{S} = 0$。若 $\textbf{S}$ 有其中一列没有非零元素，则 $\det\textbf{S} = 0$；
+    \item 对于存在一列仅有一个非零元素的 $\textbf{S}$，对这一列进行展开，得到 $\det\textbf{S} = \pm \det\textbf{S}'$，其中 $\textbf{S}'$ 是 $\textbf{S}$ 的余子式，持续这个过程，直到抵达 1. 中结果，或最终只有一个元素 $+1$ 或 $-1$。
+\end{enumerate}
+经过上述过程，可以发现 $\det\textbf{S}$ 仅有三种可能的结果：$0$、$+1$ 与 $-1$。
+\end{proof}
+
+\begin{proposition}
+若 $U$ 是 $E\Gamma$ 包含 $n - 1$ 个元素的子集，令 $\textbf{D}_U$ 表示 $(n - 1)\times(n - 1)$ 的 $\textbf{D}$ 的子矩阵，包含与 $U$ 相关的行与任意 $n - 1$ 列。则 $\textbf{D}_U$ 可逆，当且仅当 $U$ 是 $\Gamma$ 的生成树。
+\end{proposition}
+\begin{proof}
+\begin{enumerate}
+    \item $\Leftarrow$：若 $\langle U \rangle$ 是 $\Gamma$ 的生成树，$\textbf{D}_U$ 是由 $U$ 的关联矩阵 $\textbf{D}'$ 的 $n - 1$ 行组成的，由 $\langle U\rangle$ 是连通的，故 $\textbf{D}'$ 的秩为 $n-1$，所以 $\textbf{D}_U$ 是可逆的。
+    \item $\Rightarrow$：若 $\textbf{D}_U$ 是可逆的，故 $\textbf{D}'$ 有 $(n - 1)\times(n - 1)$ 的子矩阵，因此 $\textbf{D}'$ 的秩为 $n - 1$。由 $|U| = n - 1$，$\langle U\rangle$ cycle-subspace 的维度为 $0$，故 $\langle U\rangle$ 是 $\Gamma$ 的生成树。
+\end{enumerate}
+\end{proof}
+
+对于 $V\Gamma = \{v_1, v_2, \dots, v_n\}$ 与 $E\Gamma = \{e_1, e_2, \dots, e_m\}$，选定一种标号方式使得 $\{e_1, e_2, \dots, e_{n-1}\}$ 是给定的生成树 $T$ 的边集，如此 $\Gamma$ 的关联矩阵可以被分块为：
+\[
+\mathbf{D} = \left[
+\begin{array}{ccc}
+\mathbf{D}_{T} & & \mathbf{D}_{N} \\
+& \mathbf{d}_{n} &
+\end{array}
+\right]
+\]
+其中 $\textbf{D}_T$ 是 $n - 1$ 阶的可逆方阵，最后一行 $\textbf{d}_n$ 与其他行线性相关。
+
+对于剩下的边，令 $\textbf{C}$ 表示代表 $\xi_{(T),e_j}, n\le j\le m$ 标准基的向量作为列组成的矩阵，$\textbf{C}$ 可以被表示为：
+\[
+\mathbf{C} = \left[
+\begin{array}{c}
+\mathbf{C}_{T} \\
+\mathbf{I}_{m-n+1}
+\end{array}
+\right]
+\]
+$\textbf{C}$ 的每一列表示一个环，且属于 $\textbf{D}$ 的核，有 $\textbf{DC} = 0$，故
+\[
+\textbf{C}_T = - \textbf{D}_T^{-1} \textbf{D}_N
+\]
+用相同的方式来表示 $T$ 中的边，令 $\textbf{K}$ 的每一列表示 $\xi_{T,e_j}, 1\le j\le n - 1$，它可以被写为：
+\[
+\textbf{K} = \left[
+\begin{array}{c}
+\mathbf{I}_{n-1} \\
+\mathbf{K}_{T}
+\end{array}
+\right]
+\]
+因为 $\mathbf{K}$ 的每一行都属于 cycle-subspace 的正交补，故 $\textbf{CK}^T = \textbf{0}$，故 $\textbf{C}_T + \textbf{K}^T_T = \textbf{0}$，因此：
+\[
+\textbf{K}_T = (\textbf{D}^{-1}_T \textbf{D}_N)^T
+\]
+上面关于 $\textbf{C}_T$ 与 $\textbf{K}_T$ 的等式展示了基础的环与割与 $T$ 的关系可以由关联矩阵推出，我们还可以使用这种代数的方法简单地证明下面这个命题：
+\begin{theorem}
+对于 $\Gamma$ 的生成树 $T$，若 $\Gamma$ 中的边 $a\in T, b\notin T$，则：
+\[
+b\in \text{cut}(T, a) \Leftrightarrow a\in \text{cyc}(T, b)
+\]
+\end{theorem}
+\begin{proof}
+这个结果可以直接由 $\textbf{C}_T$ 与 $\textbf{K}_T$ 的结果推出，因为我们由 $\textbf{C}_T + \textbf{K}_T = \textbf{0}$。
+\end{proof}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
